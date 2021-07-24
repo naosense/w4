@@ -3,6 +3,11 @@ if !has("python") && !has("python3")
     finish
 endif
 
+if !exists("g:w4_chrome_path") && !exists("g:w4_firefox_path")
+    echoerr "Not set browser path"
+    finish
+endif
+
 if !exists("g:w4_port")
     let g:w4_port = 8341
 endif
@@ -43,17 +48,17 @@ endfun
 
 
 fun! s:open()
-    if exists("g:markdown_preview_sync_chrome_path")
+    if exists("g:w4_chrome_path")
         if has("win32")
-            execute "silent !start " . g:markdown_preview_sync_chrome_path . " --app=http://127.0.0.1:" . g:w4_port . "/index"
+            execute "silent !start " . g:w4_chrome_path . " --app=http://127.0.0.1:" . g:w4_port . "/index"
         else
-            execute "silent !\"" . g:markdown_preview_sync_chrome_path . "\" --app=http://127.0.0.1:" . g:w4_port . "/index"
+            execute "silent !\"" . g:w4_chrome_path . "\" --app=http://127.0.0.1:" . g:w4_port . "/index"
         endif
-    elseif exists("g:markdown_preview_sync_firefox_path")
+    elseif exists("g:w4_firefox_path")
         if has("win32")
-            execute "silent !start " . g:markdown_preview_sync_firefox_path . " http://127.0.0.1:" . g:w4_port . "/index"
+            execute "silent !start " . g:w4_firefox_path . " http://127.0.0.1:" . g:w4_port . "/index"
         else
-            execute "silent !\"" . g:markdown_preview_sync_firefox_path . "\" http://127.0.0.1:" . g:w4_port . "/index"
+            execute "silent !\"" . g:w4_firefox_path . "\" http://127.0.0.1:" . g:w4_port . "/index"
         endif
     endif
 endfun
@@ -210,21 +215,9 @@ fun! w4#suggestion(findstart, base)
             endfor
             return res
         elseif head == '#'
-            "let events = s:collect_events()
-            "for m in events
-            "    if m.menu =~ '.*' . a:base[1:]
-            ""        call add(res, m)
-            ""    endif
-            "endfor
             return s:collect_events('.*' . a:base[1:], 10)
         " 头部
         else
-            "let events = s:collect_events()
-            "for m in events
-            ""    if m.menu =~ '.*' . a:base
-            ""        call add(res, m)
-            ""    endif
-            "endfor
             return s:collect_events('.*' . a:base, 10)
         endif
     endif

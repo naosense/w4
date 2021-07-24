@@ -12,7 +12,16 @@
 - 人物关系图
 
 ## 使用方式
-安装完成后，在vim输入`:W4Go`命令打开浏览窗口，按`enter`打开输入窗口。
+安装完成后，设置浏览器路径
+```
+" 可以这样设置Chrome路径
+let g:w4_chrome_path = ""
+
+" 设置Firefox浏览器路径
+let g:w4_firefox_path = ""
+```
+
+在vim输入`:W4Go`命令打开浏览窗口，按`enter`打开输入窗口。
 
 ## 文本样式
 文本以`%% who what when where`开头，如下所示：
