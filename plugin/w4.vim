@@ -1,0 +1,1 @@
+command! -nargs=0 W4Go call w4#browse()

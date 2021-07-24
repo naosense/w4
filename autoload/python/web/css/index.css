@@ -1,0 +1,76 @@
+.markdown-body table caption {
+    font-size: 200%;
+    margin-bottom: 20px;
+}
+
+.markdown-body table td {
+    padding: 6px 13px;
+    border: 0px solid #dfe2e5;
+}
+
+.markdown-body table tr td:nth-child(1) {
+    text-align: right;
+    width: 20%;
+    border-right: 1px solid #dfe2e5;
+}
+
+.markdown-body table tr td:nth-child(2) {
+    text-align: left;
+    width: 80%;
+}
+
+.markdown-body table tr:nth-child(2n) {
+    background-color: #fff;
+}
+
+.markdown-body table tr {
+    background-color: #fff;
+    border-top: 0 solid #c6cbd1;
+}
+
+#mask {
+    position: fixed;
+    display: none;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0, 0, 0, 0.5);
+    z-index: 2;
+    cursor: pointer;
+}
+
+#text {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    font-size: 50px;
+    color: white;
+    transform: translate(-50%, -50%);
+    -ms-transform: translate(-50%, -50%);
+}
+
+#kw {
+    outline: none;
+    display: block;
+    height: 34px;
+    padding: 6px 12px;
+    font-size: 14px;
+    line-height: 1.42857143;
+    color: #555;
+    background-color: #fff;
+    background-image: none;
+    border: 0 solid #ccc;
+    border-radius: 5px;
+}
+
+.ui-tooltip {
+    font-size: 80%;
+}
+
+label {
+    display: inline-block;
+    width: 200px;
+}
