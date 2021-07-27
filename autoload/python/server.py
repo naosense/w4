@@ -50,8 +50,10 @@ class RequestHandler(BaseHTTPRequestHandler):
             response = {'code': 0}
             query_components = dict(qc.split("=") for qc in query.split("&"))
             kw = unquote(query_components['kw'])
-            if kw.startswith('/who'):
+            if kw.startswith('/figures'):
                 response['data'] = utils.figure_relation_data(VIM_CONTENT_DICT)
+            elif kw.startswith('/backtrack'):
+                response['data'] = utils.event_relation_data(VIM_CONTENT_DICT)
             else:
                 logic_expression = '' if kw.startswith('/all') else logic.Expression(
                     kw if kw.startswith('(') else '(' + kw + ')')

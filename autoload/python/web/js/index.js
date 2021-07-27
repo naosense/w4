@@ -7,7 +7,7 @@ $(document).ready(function () {
         let container = echarts.init(document.getElementById('graph'));
         let option = {
             title: {
-                text: '人物关系图',
+                text: '风云际会',
                 top: 'top',
                 left: 'center'
             },
@@ -66,12 +66,67 @@ $(document).ready(function () {
         container.setOption(option, true);
     };
 
+    let display_event_relation_graph = function (graph) {
+        let container = echarts.init(document.getElementById('graph'));
+        let option = {
+            title: {
+                text: '来龙去脉',
+                top: 'top',
+                left: 'center'
+            },
+            tooltip: {
+                trigger: 'item',
+                formatter: function (params) {
+                    if (params['dataType'] === 'edge') {
+                        return params['name'];
+                    }
+                    return params['data']['desc'];
+                },
+                extraCssText: "max-width:400px; white-space:pre-wrap; font-size: 50%"
+            },
+            series: [
+                {
+                    name: 'event relation',
+                    type: 'graph',
+                    layout: 'force',
+                    force: {
+                        edgeLength: [50, 300],
+                        repulsion: 500,
+                        gravity: 0.02
+                    },
+                    draggable: true,
+                    edgeSymbol: ['circle', 'arrow'],
+                    edgeSymbolSize: [0, 7],
+                    data: graph.nodes,
+                    links: graph.links,
+                    categories: graph.categories,
+                    roam: true,
+                    emphasis: {
+                        focus: 'adjacency',
+                        lineStyle: {
+                            width: 3
+                        },
+                        label: {
+                            show: true,
+                            position: 'right',
+                            formatter: '{b}'
+                        }
+                    },
+                    lineStyle: {
+                        curveness: 0.3
+                    }
+                }
+            ]
+        };
+        container.setOption(option, true);
+    };
+
     $(function () {
         $(document).tooltip();
     });
 
     $(function () {
-        let cmd = ['/all', '/who'];
+        let cmd = ['/all', '/figures', '/backtrack'];
         $('#kw').autocomplete({
             source: function (req, resp) {
                 let re = $.ui.autocomplete.escapeRegex(req.term);
@@ -85,11 +140,9 @@ $(document).ready(function () {
     });
 
     let url = new URL(window.location.href)
-    console.log('url ' + url)
     $.get(
         'http://127.0.0.1:' + url.port + '/query.json?kw=' + encodeURIComponent('/all'),
         function (data) {
-            console.log(data)
             let html = '<table><caption>故事线</caption>';
             $.each(data.data, function (i, e) {
                 html += e;
@@ -120,10 +173,15 @@ $(document).ready(function () {
                         function (data) {
                             $("#kw").val('')
                             switch (kw) {
-                                case '/who':
+                                case '/figures':
+                                case '/backtrack':
                                     $('#graph').css({'display': 'block'});
                                     $('.markdown-body').html('')
-                                    display_figure_relation_graph(data.data)
+                                    if (kw === '/figures') {
+                                        display_figure_relation_graph(data.data);
+                                    } else if (kw === '/backtrack') {
+                                        display_event_relation_graph(data.data);
+                                    }
                                     break;
                                 case '/all':
                                 default:
