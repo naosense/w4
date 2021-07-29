@@ -26,15 +26,15 @@ MAX_SIZE = 50
 # logging.basicConfig(filename='w4.log', level=logging.DEBUG)
 
 
-def log(str):
-    logging.info(str)
+def log(s):
+    logging.info(s)
 
 
-def write(wfile, str):
+def write(wfile, s):
     if is_py2:
-        wfile.write(str)
+        wfile.write(s)
     elif is_py3:
-        wfile.write(str.encode())
+        wfile.write(s.encode())
 
 
 def vim_lines(content):
@@ -71,7 +71,7 @@ def vim_lines_dict(lines):
     split_char = col_split_char(lines)
     lines_dict = {}
     items = []
-    for ln, line in enumerate(lines):
+    for idx, line in enumerate(lines):
         if line.startswith(CMD_PREFIX):
             continue
         cols = line.split(split_char)
@@ -89,7 +89,7 @@ def vim_lines_dict(lines):
             link = cols[5].strip().strip('#').split('#')
 
         item = {
-            'ln': ln,
+            'ln': idx + 1,
             'timestamp': timestamp,
             'who': ['@' + w for w in who],
             'what': what,
@@ -116,6 +116,8 @@ def col_handle(col_str, col_name, items):
     elif col_str == SAME_TO_PRE_HOLDER:
         last = items[-1]
         return last[col_name]
+    elif col_str == EMPTY_PLACE_HOLDER:
+        return ''
     else:
         if col_name == 'who':
             return col_str.strip('@').split('@')
@@ -124,43 +126,55 @@ def col_handle(col_str, col_name, items):
 
 
 def event_to_tooltip_html(event):
-    s = '<sup><a href="#" title="' \
-        + event['when'] + ', ' \
-        + event['where'] \
+    s = '<sup><a href="#' + str(event['ln']) + '" title="' \
+        + join_when_where(event) \
         + ' ' \
         + (''.join(event['who']) + ': ') \
         + event['what'] \
         + '">[' \
-        + event['timestamp'] \
+        + str(event['ln']) \
         + ']</a></sup>'
     return s
 
 
 def source_target_event_to_str(source_who, target_who, source_event, target_event):
-    return source_event['when'] + ', ' + source_event['where'] + ' ' + source_who + ': ' + source_event['what'] \
+    return join_when_where(source_event) + ' ' + source_who + ': ' + source_event['what'] \
            + ' => ' \
-           + target_event['when'] + ', ' + target_event['where'] + ' ' + target_who + ': ' + target_event['what']
+           + join_when_where(target_event) + ' ' + target_who + ': ' + target_event['what']
 
 
 def event_to_str(event):
-    return event['when'] + ', ' + event['where'] + ' ' + ''.join(event['who']) + ': ' + event['what']
+    return join_when_where(event) + ' ' + ''.join(event['who']) + ': ' + event['what']
+
+
+def join_when_where(event):
+    when = event['when']
+    where = event['where']
+    if when and where:
+        return when + ', ' + where
+    elif when:
+        return when
+    elif where:
+        return where
+    else:
+        return ''
 
 
 def wrap(s, w):
     return [s[i:i + w] for i in range(0, len(s), w)]
 
 
-def figure_relation_data(vim_lines_dict):
+def figure_relation_data(timestamp_event_dict):
     # (张三, 李四)->[{source:event, target:event}]，表示张三指向李四的事件
     relation_dict = {}
-    for source_timestamp, source_event in vim_lines_dict.items():
+    for source_timestamp, source_event in timestamp_event_dict.items():
         if source_event['link']:
             for target_timestamp in source_event['link']:
                 if source_timestamp == target_timestamp:
                     continue
-                if target_timestamp not in vim_lines_dict:
+                if target_timestamp not in timestamp_event_dict:
                     continue
-                target_event = vim_lines_dict[target_timestamp]
+                target_event = timestamp_event_dict[target_timestamp]
                 for source_who in source_event['who']:
                     for target_who in target_event['who']:
                         source_to_target = {'source': source_event, 'target': target_event}
@@ -225,16 +239,16 @@ def figure_relation_data(vim_lines_dict):
     return {'nodes': nodes, 'links': links, 'categories': [{'name': n} for n in unique_who]}
 
 
-def event_relation_data(vim_lines_dict):
+def event_relation_data(timestamp_event_dict):
     timestamp_linked_cnt = {}
     unique_timestamp = set()
     links = []
-    for source_timestamp, source_event in vim_lines_dict.items():
+    for source_timestamp, source_event in timestamp_event_dict.items():
         if source_event['link']:
             for target_timestamp in source_event['link']:
                 if source_timestamp == target_timestamp:
                     continue
-                if target_timestamp not in vim_lines_dict:
+                if target_timestamp not in timestamp_event_dict:
                     continue
                 if target_timestamp in timestamp_linked_cnt:
                     timestamp_linked_cnt[target_timestamp] = timestamp_linked_cnt[target_timestamp] + 1
@@ -243,17 +257,19 @@ def event_relation_data(vim_lines_dict):
 
                 unique_timestamp.add(source_timestamp)
                 unique_timestamp.add(target_timestamp)
-                links.append({'source': source_timestamp, 'target': target_timestamp})
+                target_event = timestamp_event_dict[target_timestamp]
+                links.append({'source': str(source_event['ln']), 'target': str(target_event['ln'])})
 
     max_cnt = max(timestamp_linked_cnt.values())
     scale = MAX_SIZE / max_cnt
     nodes = []
     for t in unique_timestamp:
         cnt = timestamp_linked_cnt[t] if t in timestamp_linked_cnt else 1
+        event = timestamp_event_dict[t]
         nodes.append({
             'category': t,
-            'name': t,
-            'desc': event_to_str(vim_lines_dict[t]),
+            'name': str(event['ln']),
+            'desc': event_to_str(event),
             'value': cnt,
             'symbolSize': NON_REFER_DEFAULT_SIZE if t not in timestamp_linked_cnt
             else max(cnt * scale, REFER_DEFAULT_SIZE)

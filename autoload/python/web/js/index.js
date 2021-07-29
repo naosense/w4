@@ -101,6 +101,14 @@ $(document).ready(function () {
                     links: graph.links,
                     categories: graph.categories,
                     roam: true,
+                    label: {
+                        show: true,
+                        position: 'right',
+                        formatter: '{b}'
+                    },
+                    labelLayout: {
+                        hideOverlap: true
+                    },
                     emphasis: {
                         focus: 'adjacency',
                         lineStyle: {

@@ -68,9 +68,8 @@ class RequestHandler(BaseHTTPRequestHandler):
                     if logic_expression:
                         if logic_expression.predicate(source_event):
                             data.append(
-                                '<tr><td>'
-                                + source_event['when'] + ', '
-                                + source_event['where']
+                                '<tr id="' + str(source_event['ln']) + '"><td>'
+                                + utils.join_when_where(source_event)
                                 + '</td><td>'
                                 + (''.join(source_event['who']) + ': ')
                                 + source_event['what']
@@ -80,9 +79,8 @@ class RequestHandler(BaseHTTPRequestHandler):
                     else:
                         if kw.startswith('/all'):
                             data.append(
-                                '<tr><td>'
-                                + source_event['when'] + ', '
-                                + source_event['where']
+                                '<tr id="' + str(source_event['ln']) + '"><td>'
+                                + utils.join_when_where(source_event)
                                 + '</td><td>'
                                 + (''.join(source_event['who']) + ': ')
                                 + source_event['what']
