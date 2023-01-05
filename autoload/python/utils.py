@@ -31,17 +31,17 @@ def log(s):
 
 
 def write(wfile, s):
+    if is_py3:
+        wfile.write(s.encode('utf-8'))
     if is_py2:
         wfile.write(s)
-    elif is_py3:
-        wfile.write(s.encode('utf-8'))
 
 
 def read(rfile, content_length):
+    if is_py3:
+        return rfile.read(content_length).decode('utf-8')
     if is_py2:
         return rfile.read(content_length)
-    elif is_py3:
-        return rfile.read(content_length).decode('utf-8')
 
 
 def vim_lines(content):

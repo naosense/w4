@@ -16,7 +16,7 @@ def stop(port):
 
 
 def sync(content, port):
-    content = content if utils.is_py2 else content.encode('utf-8')
+    content = content.encode('utf-8') if utils.is_py3 else content
     req = urllib2.Request('http://127.0.0.1:' + port + '/sync', data=content)
     urllib2.urlopen(req)
 
