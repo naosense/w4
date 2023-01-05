@@ -1,4 +1,4 @@
-#!/bin/usr env python
+#!/usr/bin/env python
 # -.- coding: utf-8 -.-
 import os
 import sys
@@ -99,7 +99,7 @@ class RequestHandler(BaseHTTPRequestHandler):
 
     def do_POST(self):
         content_length = int(self.headers['Content-Length'])
-        post_data = self.rfile.read(content_length)
+        post_data = utils.read(self.rfile, content_length)
         global VIM_CONTENT_DICT
         VIM_CONTENT_DICT = utils.vim_lines_dict(utils.vim_lines(post_data))
         self.set_headers('application/json; charset=UTF-8')

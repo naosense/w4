@@ -1,4 +1,4 @@
-#!/bin/usr env python
+#!/usr/bin/env python
 # -.- coding: utf-8 -.-
 import utils
 
@@ -16,6 +16,10 @@ def stop(port):
 
 
 def sync(content, port):
-    utils.log(content)
+    content = content if utils.is_py2 else content.encode('utf-8')
     req = urllib2.Request('http://127.0.0.1:' + port + '/sync', data=content)
     urllib2.urlopen(req)
+
+
+if __name__ == '__main__':
+    sync('hello world', '8341')

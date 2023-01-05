@@ -1,4 +1,4 @@
-#!/bin/usr env python
+#!/usr/bin/env python
 # -.- coding: utf-8 -.-
 
 import sys
@@ -22,8 +22,8 @@ NON_REFER_DEFAULT_SIZE = 2 * math.pi
 REFER_DEFAULT_SIZE = 10
 MAX_SIZE = 50
 
-
-# logging.basicConfig(filename='w4.log', level=logging.DEBUG)
+# FORMAT = "%(asctime)s - %(levelname)-7s - %(filename)s:%(lineno)4d - %(message)s"
+# logging.basicConfig(filename='w4.log', level=logging.DEBUG, format=FORMAT)
 
 
 def log(s):
@@ -34,7 +34,14 @@ def write(wfile, s):
     if is_py2:
         wfile.write(s)
     elif is_py3:
-        wfile.write(s.encode())
+        wfile.write(s.encode('utf-8'))
+
+
+def read(rfile, content_length):
+    if is_py2:
+        return rfile.read(content_length)
+    elif is_py3:
+        return rfile.read(content_length).decode('utf-8')
 
 
 def vim_lines(content):
@@ -139,8 +146,8 @@ def event_to_tooltip_html(event):
 
 def source_target_event_to_str(source_who, target_who, source_event, target_event):
     return join_when_where(source_event) + ' ' + source_who + ': ' + source_event['what'] \
-           + ' => ' \
-           + join_when_where(target_event) + ' ' + target_who + ': ' + target_event['what']
+        + ' => ' \
+        + join_when_where(target_event) + ' ' + target_who + ': ' + target_event['what']
 
 
 def event_to_str(event):
