@@ -21,7 +21,8 @@ endfun
 
 let s:using_python3 = s:using_py3()
 let s:python_until_eof = s:using_python3 ? "python3 << EOF" : "python << EOF"
-let s:python_command = s:using_python3 ? "py3 " : "py "
+let s:python_cmd = s:using_python3 ? "py3 " : "py "
+let s:python_command = s:using_python3 ? "python3" : "python"
 let s:plugin_root_dir = fnamemodify(resolve(expand("<sfile>:p")), ":h")
 
 exec s:python_until_eof
@@ -39,9 +40,9 @@ let s:is_start = 0
 
 fun! s:start()
     if has("win32")
-        execute 'silent !start /b python ' . s:plugin_root_dir . '/python/server.py ' . g:w4_port
+        execute 'silent !start /b ' . s:python_command . ' ' . s:plugin_root_dir . '/python/server.py ' . g:w4_port
     else
-        execute 'silent !python ' . s:plugin_root_dir . '/python/server.py ' . g:w4_port . ' >/dev/null 2>&1 &'
+        execute 'silent !(' . s:python_command . ' ' . s:plugin_root_dir . '/python/server.py ' . g:w4_port . ' && sleep 1) >/dev/null 2>&1 &'
     endif
     let s:is_start = 1
 endfun
