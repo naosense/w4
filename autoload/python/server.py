@@ -90,9 +90,11 @@ class RequestHandler(BaseHTTPRequestHandler):
                 response['data'] = data
             utils.write(self.wfile, json.dumps(response))
         elif path.endswith('stop'):
+            import threading
             self.set_headers('application/json; charset=UTF-8')
             utils.write(self.wfile, json.dumps({'code': 0}))
-            HTTP_SERVER.server_close()
+            global HTTP_SERVER
+            threading.Thread(target=HTTP_SERVER.shutdown, daemon=True).start()
         else:
             self.set_headers('application/json; charset=UTF-8')
             utils.write(self.wfile, json.dumps({'status': 'SUCCESS', 'path:': self.path}))
