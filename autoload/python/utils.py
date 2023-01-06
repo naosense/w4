@@ -22,8 +22,8 @@ NON_REFER_DEFAULT_SIZE = 2 * math.pi
 REFER_DEFAULT_SIZE = 10
 MAX_SIZE = 50
 
-FORMAT = "%(asctime)s - %(levelname)-7s - %(filename)s:%(lineno)4d - %(message)s"
-logging.basicConfig(filename='w4.log', level=logging.DEBUG, format=FORMAT)
+# FORMAT = "%(asctime)s - %(levelname)-7s - %(filename)s:%(lineno)4d - %(message)s"
+# logging.basicConfig(filename='w4.log', level=logging.DEBUG, format=FORMAT)
 
 
 def write(wfile, s):
