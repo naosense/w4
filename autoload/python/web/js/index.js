@@ -142,7 +142,7 @@ $(document).ready(function () {
     });
 
     $(function () {
-        let cmd = ['/all', '/characters', '/events'];
+        let cmd = ['/home', '/characters', '/events'];
         $('#kw').autocomplete({
             source: function (req, resp) {
                 let re = $.ui.autocomplete.escapeRegex(req.term);
@@ -157,7 +157,7 @@ $(document).ready(function () {
 
     let url = new URL(window.location.href)
     $.get(
-        'http://127.0.0.1:' + url.port + '/query.json?kw=' + encodeURIComponent('/all'),
+        'http://127.0.0.1:' + url.port + '/query.json?kw=' + encodeURIComponent('/home'),
         function (data) {
             let html = '<table><caption>故事线</caption>';
             $.each(data.data, function (i, e) {
@@ -199,7 +199,7 @@ $(document).ready(function () {
                                         display_event_relation_graph(data.data);
                                     }
                                     break;
-                                case '/all':
+                                case '/home':
                                 default:
                                     $('#graph').css({'display': 'none'});
                                     let html = '<table><caption>故事线</caption>';

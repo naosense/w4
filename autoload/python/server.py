@@ -55,7 +55,7 @@ class RequestHandler(BaseHTTPRequestHandler):
             elif kw.startswith('/events'):
                 response['data'] = utils.event_relation_data(VIM_CONTENT_DICT)
             else:
-                logic_expression = '' if kw.startswith('/all') else logic.Expression(
+                logic_expression = '' if kw.startswith('/home') else logic.Expression(
                     kw if kw.startswith('(') else '(' + kw + ')')
                 # sort by line number
                 sorted_dict = sorted(VIM_CONTENT_DICT.items(), key=lambda x: x[1]['ln'])
@@ -77,7 +77,7 @@ class RequestHandler(BaseHTTPRequestHandler):
                                 + '</td></tr>'
                             )
                     else:
-                        if kw.startswith('/all'):
+                        if kw.startswith('/home'):
                             data.append(
                                 '<tr id="' + str(source_event['ln']) + '"><td>'
                                 + utils.join_when_where(source_event)
