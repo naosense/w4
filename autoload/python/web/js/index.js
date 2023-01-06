@@ -3,11 +3,11 @@ $(document).ready(function () {
         return s === null || s === undefined || s === '';
     };
 
-    let display_figure_relation_graph = function (graph) {
+    let display_character_relation_graph = function (graph) {
         let container = echarts.init(document.getElementById('graph'));
         let option = {
             title: {
-                text: '风云际会',
+                text: 'CHARACTERS',
                 top: 'top',
                 left: 'center'
             },
@@ -74,7 +74,7 @@ $(document).ready(function () {
         let container = echarts.init(document.getElementById('graph'));
         let option = {
             title: {
-                text: '来龙去脉',
+                text: 'EVENTS',
                 top: 'top',
                 left: 'center'
             },
@@ -159,7 +159,7 @@ $(document).ready(function () {
     $.get(
         'http://127.0.0.1:' + url.port + '/query.json?kw=' + encodeURIComponent('/home'),
         function (data) {
-            let html = '<table><caption>故事线</caption>';
+            let html = '<table><caption>STORY LINE</caption>';
             $.each(data.data, function (i, e) {
                 html += e;
             })
@@ -194,7 +194,7 @@ $(document).ready(function () {
                                     $('#graph').css({'display': 'block'});
                                     $('.markdown-body').html('')
                                     if (kw === '/characters') {
-                                        display_figure_relation_graph(data.data);
+                                        display_character_relation_graph(data.data);
                                     } else if (kw === '/events') {
                                         display_event_relation_graph(data.data);
                                     }
@@ -202,7 +202,7 @@ $(document).ready(function () {
                                 case '/home':
                                 default:
                                     $('#graph').css({'display': 'none'});
-                                    let html = '<table><caption>故事线</caption>';
+                                    let html = '<table><caption>STORY LINE</caption>';
                                     $.each(data.data, function (i, e) {
                                         html += e;
                                     })
