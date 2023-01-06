@@ -142,7 +142,7 @@ $(document).ready(function () {
     });
 
     $(function () {
-        let cmd = ['/all', '/figures', '/backtrack'];
+        let cmd = ['/all', '/figures', '/events'];
         $('#kw').autocomplete({
             source: function (req, resp) {
                 let re = $.ui.autocomplete.escapeRegex(req.term);
@@ -190,12 +190,12 @@ $(document).ready(function () {
                             $("#kw").val('')
                             switch (kw) {
                                 case '/figures':
-                                case '/backtrack':
+                                case '/events':
                                     $('#graph').css({'display': 'block'});
                                     $('.markdown-body').html('')
                                     if (kw === '/figures') {
                                         display_figure_relation_graph(data.data);
-                                    } else if (kw === '/backtrack') {
+                                    } else if (kw === '/events') {
                                         display_event_relation_graph(data.data);
                                     }
                                     break;

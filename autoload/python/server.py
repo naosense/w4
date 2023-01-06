@@ -52,7 +52,7 @@ class RequestHandler(BaseHTTPRequestHandler):
             kw = unquote(query_components['kw'])
             if kw.startswith('/figures'):
                 response['data'] = utils.figure_relation_data(VIM_CONTENT_DICT)
-            elif kw.startswith('/backtrack'):
+            elif kw.startswith('/events'):
                 response['data'] = utils.event_relation_data(VIM_CONTENT_DICT)
             else:
                 logic_expression = '' if kw.startswith('/all') else logic.Expression(

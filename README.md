@@ -74,7 +74,7 @@ let g:w4_firefox_path = ""
 
 ## 类SQL筛查
 支持：
-- 特殊命令：以`/`开头，目前有三个，`/all`显示所有的条目，`/figures`显示人物关系图，`/backtrack`显示事件关系图
+- 特殊命令：以`/`开头，目前有三个，`/all`显示所有的条目，`/figures`显示人物关系图，`/events`显示事件关系图
 - 逻辑表达式：与（&）、或（|）、非（!）、等于（=，模糊匹配）、不等于（!=）
 
 比如和阿Q相关的事：
@@ -101,7 +101,7 @@ when=春天
 ![人物关系图](test/who2.png)
 
 ## 事件关系图
-输入`/backtrack`命令
+输入`/events`命令
 
 ![](test/backtrack1.png)
 ![](test/backtrack2.png)
