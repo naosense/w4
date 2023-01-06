@@ -50,7 +50,7 @@ class RequestHandler(BaseHTTPRequestHandler):
             response = {'code': 0}
             query_components = dict(qc.split("=") for qc in query.split("&"))
             kw = unquote(query_components['kw'])
-            if kw.startswith('/figures'):
+            if kw.startswith('/characters'):
                 response['data'] = utils.figure_relation_data(VIM_CONTENT_DICT)
             elif kw.startswith('/events'):
                 response['data'] = utils.event_relation_data(VIM_CONTENT_DICT)
