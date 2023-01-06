@@ -1,8 +1,11 @@
+[![English badge](https://img.shields.io/badge/%E8%8B%B1%E6%96%87-English-blue)](./README_EN.md)
+[![简体中文 badge](https://img.shields.io/badge/%E7%AE%80%E4%BD%93%E4%B8%AD%E6%96%87-Simplified%20Chinese-blue)](./README.md)
+
 # w4
 不知道大家有没有这样的需求，看小说有时候想理一下时间（故事）线，更好的理解剧情发展。之前用过思维导图整理，但是总觉得思维导图“有点重”，在作图的过程中，会陷入“到底是选择方框还是圆框”、“到底是虚线还是实线”这样的纠结中，导致最后做出来的图形式大于内容，搞得自己很疲惫。也曾在本子上整理，但是不便于检索和保存。其实想要的很简单：可以大致下查看事件发生的先后顺序和联系，具有一定的筛查功能就够了。
 
 在这样的背景下，有了这款vim插件，之所以选择vim是因为自己平常用的较多，写博客、纯文本编辑一般都用它。插件名字w4，灵感来源小说三要素：地点、人物、事件，翻译成英文就是where、who、what，再加一个时间when。
-![vim](test/vim.png)
+![vim](assets/vim.png)
 
 大概支持以下功能：
 - 纯文本
@@ -23,7 +26,7 @@ let g:w4_firefox_path = ""
 ```
 
 在vim输入`:W4Go`命令打开浏览窗口，按`enter`打开输入窗口，效果是模仿游戏聊天窗口的样子，效果如下，
-![home](test/logic.png)
+![home](assets/logic.png)
 
 ## 文本样式
 文本以`%% who what when where`开头，如下所示：
@@ -70,7 +73,7 @@ let g:w4_firefox_path = ""
 输入@符号自动提示所有的人名
 
 输入#提示之前的条目，在输入过程中可以使用Tab触发补全，可以只输入少量字符按Tab自动补全，比如示例文本最后一行可以输入#006就会自动提示。
-![自动补全](test/autocmp.png)
+![自动补全](assets/autocmp.png)
 
 ## 类SQL筛查
 支持：
@@ -97,14 +100,14 @@ when=春天
 ## 人物关系图
 输入`/characters`命令
 
-![人物关系图](test/who1.png)
-![人物关系图](test/who2.png)
+![人物关系图](assets/who1.png)
+![人物关系图](assets/who2.png)
 
 ## 事件关系图
 输入`/events`命令
 
-![](test/backtrack1.png)
-![](test/backtrack2.png)
+![](assets/backtrack1.png)
+![](assets/backtrack2.png)
 
 
 
