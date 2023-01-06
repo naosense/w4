@@ -64,6 +64,10 @@ $(document).ready(function () {
             ]
         };
         container.setOption(option, true);
+
+        window.onresize = function() {
+            container.resize();
+        };
     };
 
     let display_event_relation_graph = function (graph) {
@@ -127,6 +131,10 @@ $(document).ready(function () {
             ]
         };
         container.setOption(option, true);
+
+        window.onresize = function() {
+            container.resize();
+        };
     };
 
     $(function () {
