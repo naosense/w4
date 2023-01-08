@@ -23,6 +23,8 @@ Feature:
 
 ## Settings
 
+You need to set the browser installation path to make the plugin work, the plugin supports Chrome and Firefox, you can choose either.
+
 ```
 " set chrome path
 let g:w4_chrome_path = ""
@@ -66,7 +68,7 @@ It can be seen that the sample text has more than four columns, because the firs
 
 ![autocomplete](assets/autocmp_en.png)
 
-## Query Expression
+## Query expression
 
 support:
 - Special commands: start with `/`, there are currently three, `/home` displays all entries, `/characters` displays the character relationship diagram, `/events` displays the event relationship diagram.
