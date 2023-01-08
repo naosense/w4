@@ -5,6 +5,8 @@
 
 # w4
 
+![demo](assets/demo.gif)
+
 I don’t know if you have such a need, when reading novels, sometimes I want to sort out the time (story) line to better understand the development of the plot. I have used mind maps to sort out before, but I always feel that mind maps are "a bit heavy". In the process of drawing, I will fall into the entanglement of "whether to choose a square box or a round box", "whether it is a dashed line or a solid line", finally, **form is greater than content**, which makes me very tired. I've also organized it in a notebook before, but it was not easy to retrieve and save. In fact, what I want is very simple: I can view the development sequence of the story and the connection between events, with a simple retrieve function.
 
 In this context, with this vim plugin, I chose vim because I use it a lot daily, such as blogging and plain text editing. The name of the plug-in is w4, inspired by the three elements of the novel: where, who, what, plus a when.
